@@ -3,11 +3,12 @@ import React from 'react';
 type ButtonPropsType = {
     title: string;
     onClick?: () => void;
+    className?: string;
 }
 
-export const Button = ({title, onClick}: ButtonPropsType) => {
+export const Button = ({title, onClick, className}: ButtonPropsType) => {
     return (
-        <button onClick={onClick}>{title}</button>
+        <button className={className} onClick={onClick}>{title}</button>
     );
 };
 

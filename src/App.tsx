@@ -30,6 +30,11 @@ function App() {
         setFilter(filter)
     }
 
+    const changeCheckedTask = (taskId: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+    }
+
+
     let [filter, setFilter] = useState<FilterTYpe>('All')
 
     let tasksForTodolist = tasks;
@@ -50,6 +55,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeCheckedTask={changeCheckedTask}
+                      filter={filter}
             />
         </div>
     );
