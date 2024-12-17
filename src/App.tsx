@@ -5,7 +5,6 @@ import {v1} from 'uuid';
 import {AddItemForm} from "./AddItemForm";
 import {
     AppBar,
-    Button,
     Container,
     createTheme, CssBaseline,
     Grid,
