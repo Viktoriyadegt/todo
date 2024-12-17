@@ -1,14 +1,15 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button} from "./Button";
+import {Button, IconButton, TextField} from "@mui/material";
+import {AddBox} from "@mui/icons-material";
+
 
 type AddItemFormType = {
-    addItem: (title: string)=> void
+    addItem: (title: string) => void
 
 }
 
 export const AddItemForm = ({addItem}: AddItemFormType) => {
     let [taskTitle, setTaskTitle] = useState<string>('')
-
     let [error, setError] = useState<string | null>(null)
 
     const addTaskHandler = () => {
@@ -29,12 +30,19 @@ export const AddItemForm = ({addItem}: AddItemFormType) => {
 
     return (
         <div>
-            <input className={error ? 'error' : ''}
-                   value={taskTitle}
-                   onChange={changeTaskTitleTaskHandler}
-                   onKeyUp={onKeyUpHandler}/>
-            <Button title={'+'} onClick={addTaskHandler}/>
-            {error && <div className={'error-message'}>{error}</div>}
+            <TextField
+                label={'Enter a text'}
+                variant={'outlined'}
+                className={error ? 'error' : ''}
+                value={taskTitle}
+                size={'small'}
+                error={!!error}
+                helperText={error}
+                onChange={changeTaskTitleTaskHandler}
+                onKeyUp={onKeyUpHandler}/>
+            <IconButton onClick={addTaskHandler} color={'primary'}>
+                <AddBox />
+            </IconButton>
         </div>
     );
 };
