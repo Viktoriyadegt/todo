@@ -20,7 +20,7 @@ import {MenuButton} from "./MenuButton";
 
 export type FilterTYpe = 'All' | 'Active' | 'Completed'
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterTYpe
