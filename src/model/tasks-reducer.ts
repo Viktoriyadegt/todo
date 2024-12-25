@@ -36,38 +36,43 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             }
         }
         case "ADD-TASK": {
+            const {title, todolistId} = action.payload
             return {
                 ...state,
-                [action.payload.todolistId]: [{
+                [todolistId]: [{
                     id: v1(),
-                    title: action.payload.title,
+                    title,
                     isDone: false
-                }, ...state[action.payload.todolistId]]
+                }, ...state[todolistId]]
             }
         }
         case "CHANGE-TASK-STATUS": {
+            const {taskId, todolistId, isDone} = action.payload
             return {
                 ...state,
-                [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? {
+                [todolistId]: state[todolistId].map(t => t.id === taskId ? {
                     ...t,
-                    isDone: action.payload.isDone
+                    isDone
                 } : t)
             }
         }
         case "CHANGE-TASK-TITLE": {
+            const {taskId, todolistId, title} = action.payload
             return {
                 ...state,
-                [action.payload.todolistId]: state[action.payload.todolistId].map(t => t.id === action.payload.taskId ? {
+                [todolistId]: state[todolistId].map(t => t.id === taskId ? {
                     ...t,
-                    title: action.payload.title
+                    title
                 } : t)
             }
         }
         case "ADD-TODOLIST":{
-            return {...state, [action.payload.todolistId]: []}
+            const {todolistId} = action.payload
+            return {...state, [todolistId]: []}
         }
         case "REMOVE-TODOLIST":{
-            delete state[action.payload.id]
+            const { id} = action.payload
+            delete state[id]
             return {...state}
         }
 
@@ -76,7 +81,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
     }
 }
 
-export const removeTaskAC = (payload: { todolistId: string, taskId: string }) => {
+export const removeTaskAC = (payload: { todolistId: string,  taskId: string }) => {
     return {type: 'REMOVE-TASK', payload} as const
 }
 
