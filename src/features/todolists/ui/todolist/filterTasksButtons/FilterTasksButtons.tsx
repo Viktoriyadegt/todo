@@ -9,7 +9,7 @@ import { filterButtonsContainerSx } from "./ FilterTasksButtons.styles";
 }
 
 export const FilterTasksButtons = ({todolist}: Props) => {
-     const {id, filter, ...rest} = todolist
+     const {id, filter} = todolist
 
     const dispatch = usAppDispatch()
 
