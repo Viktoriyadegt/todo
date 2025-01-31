@@ -5,7 +5,7 @@ import { AddItemForm } from "common/components/addItemForm/AddItemForm"
 import type { DomainTask, UpdateTaskModel } from "../features/todolists/api/tasksApi.types"
 import type { Todolist } from "../features/todolists/api/todolistsApi.types"
 import { todolistsApi } from "../features/todolists/api/todolistsApi"
-import { TaskPriority, TaskStatus } from "common/enums/enums"
+import { TaskStatus } from "common/enums/enums"
 import { tasksApi } from "../features/todolists/api/tasksApi"
 
 export const AppHttpRequests = () => {
