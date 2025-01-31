@@ -1,33 +1,29 @@
-import React from 'react';
-import {AddItemForm} from "../../../../common/components/AddItemForm";
-import {FilterTasksButtons} from "./filterTasksButtons/FilterTasksButtons";
-import {Tasks} from "./tasks/Tasks";
-import {TodolistTitle} from "./todolistTitle/TodolistTitle";
-import {usAppDispatch} from "../../../../app/hooks";
-import { addTaskAC } from '../../model/tasks-reducer';
-import {TodolistType} from "../../model/todolists-reducer";
-
+import React from "react"
+import { Tasks } from "./tasks/Tasks"
+import { TodolistTitle } from "./todolistTitle/TodolistTitle"
+import { usAppDispatch } from "common/hooks/hooks"
+import { addTaskAC } from "../../model/tasks-reducer"
+import { TodolistType } from "../../model/todolists-reducer"
+import { AddItemForm } from "common/components"
+import { FilterTasksButtons } from "./filterTasksButtons/FilterTasksButtons"
 
 type TodolistPropsType = {
-    todolist: TodolistType
+  todolist: TodolistType
 }
 
-export const Todolist = ({todolist}: TodolistPropsType) => {
+export const Todolist = ({ todolist }: TodolistPropsType) => {
+  const dispatch = usAppDispatch()
 
-    const dispatch = usAppDispatch()
+  const addTaskHandler = (title: string) => {
+    dispatch(addTaskAC({ todolistId: todolist.id, title }))
+  }
 
-    const addTaskHandler = (title: string) => {
-        dispatch(addTaskAC({todolistId: todolist.id, title}))
-    }
-
-    return (
-        <div>
-            <TodolistTitle todolist={todolist}/>
-            <AddItemForm addItem={addTaskHandler}/>
-            <Tasks todolist={todolist}/>
-            <FilterTasksButtons todolist={todolist}/>
-        </div>
-    )
-        ;
-};
-
+  return (
+    <div>
+      <TodolistTitle todolist={todolist} />
+      <AddItemForm addItem={addTaskHandler} />
+      <Tasks todolist={todolist} />
+      <FilterTasksButtons todolist={todolist} />
+    </div>
+  )
+}
