@@ -1,9 +1,10 @@
 import { List } from "@mui/material"
-import React from "react"
-import { Task } from "./task/Task"
+import React, {useEffect} from "react"
 import { selectTasks } from "../../../model/task-selector"
 import { TodolistType } from "../../../model/todolists-reducer"
-import { usAppSelector } from "common/hooks"
+import {usAppDispatch, usAppSelector} from "common/hooks"
+import { Task } from "./Task/Task"
+import {fetchTasksTC} from "../../../model/tasks-reducer";
 
 export type Props = {
   todolist: TodolistType
@@ -12,11 +13,16 @@ export type Props = {
 export const Tasks = ({ todolist }: Props) => {
   const { id, filter } = todolist
   const tasks = usAppSelector(selectTasks)
+  const dispatch = usAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchTasksTC(id))
+  }, []);
 
   let tasksForTodolist = tasks[id]
 
   if (filter === "Active") {
-    tasksForTodolist = tasksForTodolist.filter((f) => !f.isDone)
+    tasksForTodolist = tasksForTodolist.filter((f) => !f.status)
   }
 
   if (filter === "Completed") {
@@ -25,11 +31,11 @@ export const Tasks = ({ todolist }: Props) => {
 
   return (
     <>
-      {tasksForTodolist.length === 0 ? (
+      {tasksForTodolist?.length === 0 ? (
         <span>Тасок нет</span>
       ) : (
         <List>
-          {tasksForTodolist.map((task) => {
+          {tasksForTodolist?.map((task) => {
             return <Task task={task} todolistId={id} />
           })}
         </List>

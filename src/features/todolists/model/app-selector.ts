@@ -1,3 +1,3 @@
-import { AppRootState } from "../../../app/store"
+import { RootState } from "../../../app/store"
 
-export const selectThemeMode = (state: AppRootState) => state.app.themeMode
+export const selectThemeMode = (state: RootState) => state.app.themeMode

@@ -1,7 +1,7 @@
-export { EditableSpan } from "./editableSpan/EditableSpan"
-export { AddItemForm } from "./addItemForm/AddItemForm"
-export { MenuButton } from "./menuButton/MenuButton"
-export { Header } from "./header/Header"
+export { EditableSpan } from "common/components/EditableSpan/EditableSpan"
+export { AddItemForm } from "common/components/AddItemForm/AddItemForm"
+export { MenuButton } from "common/components/MenuButton/MenuButton"
+export { Header } from "common/components/Header/Header"
 
 /*
 export * from './editableSpan/EditableSpan'

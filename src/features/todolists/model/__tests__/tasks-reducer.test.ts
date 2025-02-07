@@ -80,7 +80,7 @@ test("title of specified task should be changed", () => {
   expect(endState["todolistId1"][1].title).toBe("JS")
 })
 
-test("new array should be added when new todolist is added", () => {
+test("new array should be added when new Todolist is added", () => {
   const endState = tasksReducer(startState, addTodolistAC("new todolist"))
 
   const keys = Object.keys(endState)

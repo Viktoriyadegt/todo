@@ -1,3 +1,3 @@
-import { AppRootState } from "../../../app/store"
+import { RootState } from "../../../app/store"
 
-export const selectTodolists = (state: AppRootState) => state.todolists
+export const selectTodolists = (state: RootState) => state.todolists

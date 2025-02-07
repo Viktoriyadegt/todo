@@ -1,10 +1,10 @@
 import React from "react"
-import "../features/todolists/ui/todolist/todolistTitle/TodolistTitle.module.css"
+import "../features/todolists/ui/Todolist/TodolistTitle/TodolistTitle.module.css"
 import { CssBaseline, ThemeProvider } from "@mui/material"
 import { usAppSelector } from "common/hooks/hooks"
 import { getTheme } from "common/theme"
 import { Main } from "./Main"
-import { Header } from "common/components/header/Header"
+import { Header } from "common/components/Header/Header"
 import { selectThemeMode } from "../features/todolists/model/app-selector"
 
 function App() {

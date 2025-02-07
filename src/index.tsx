@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client"
 import "./index.css"
 import { Provider } from "react-redux"
 import { store } from "./app/store"
-import { AppHttpRequests } from "./app/AppHttpRequests"
+import App from "./app/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <Provider store={store}>
-    <AppHttpRequests />
+    <App/>
   </Provider>,
 )
 

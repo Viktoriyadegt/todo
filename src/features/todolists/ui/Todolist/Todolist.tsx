@@ -1,11 +1,11 @@
 import React from "react"
-import { Tasks } from "./tasks/Tasks"
-import { TodolistTitle } from "./todolistTitle/TodolistTitle"
+import { Tasks } from "./Tasks/Tasks"
+import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
 import { usAppDispatch } from "common/hooks/hooks"
 import { addTaskAC } from "../../model/tasks-reducer"
 import { TodolistType } from "../../model/todolists-reducer"
 import { AddItemForm } from "common/components"
-import { FilterTasksButtons } from "./filterTasksButtons/FilterTasksButtons"
+import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
 
 type TodolistPropsType = {
   todolist: TodolistType
