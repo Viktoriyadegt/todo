@@ -2,8 +2,6 @@ import { IconButton } from "@mui/material"
 import React from "react"
 import { Delete } from "@mui/icons-material"
 import {
-  changeTodolistTitleAC,
-  removeTodolistAC,
   removeTodolistTC,
   TodolistType,
   updateTodolistTitleTC
