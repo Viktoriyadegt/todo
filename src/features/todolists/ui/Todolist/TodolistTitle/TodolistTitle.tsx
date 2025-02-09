@@ -1,7 +1,13 @@
 import { IconButton } from "@mui/material"
 import React from "react"
 import { Delete } from "@mui/icons-material"
-import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from "../../../model/todolists-reducer"
+import {
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  removeTodolistTC,
+  TodolistType,
+  updateTodolistTitleTC
+} from "../../../model/todolists-reducer"
 import { EditableSpan } from "common/components"
 import { usAppDispatch } from "common/hooks"
 
@@ -15,11 +21,11 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const dispatch = usAppDispatch()
 
   const changeTaskTitleHandler = (title: string) => {
-    dispatch(changeTodolistTitleAC(id, title))
+    dispatch(updateTodolistTitleTC(id, title))
   }
 
   const removeTodolistHandler = () => {
-    dispatch(removeTodolistAC(id))
+    dispatch(removeTodolistTC(id))
   }
 
   return (
