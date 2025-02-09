@@ -19,9 +19,9 @@ export const Todolists = () => {
         <>
             {todolists.map((tl) => {
                 return (
-                    <Grid2>
+                    <Grid2 key={tl.id}>
                         <Paper sx={{p: "0 20px 20px 20px"}}>
-                            <Todolist key={tl.id} todolist={tl}/>
+                            <Todolist  todolist={tl}/>
                         </Paper>
                     </Grid2>
                 )

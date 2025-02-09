@@ -25,8 +25,8 @@ export const TodolistTitle = ({ todolist }: Props) => {
   return (
     <h3>
       <EditableSpan title={title} changeTitle={changeTaskTitleHandler} />
-      <IconButton>
-        <Delete onClick={removeTodolistHandler} />
+      <IconButton onClick={removeTodolistHandler}>
+        <Delete  />
       </IconButton>
     </h3>
   )

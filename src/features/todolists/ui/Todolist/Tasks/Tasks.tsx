@@ -5,6 +5,7 @@ import { TodolistType } from "../../../model/todolists-reducer"
 import {usAppDispatch, usAppSelector} from "common/hooks"
 import { Task } from "./Task/Task"
 import {fetchTasksTC} from "../../../model/tasks-reducer";
+import {TaskStatus} from "common/enums";
 
 export type Props = {
   todolist: TodolistType
@@ -22,11 +23,11 @@ export const Tasks = ({ todolist }: Props) => {
   let tasksForTodolist = tasks[id]
 
   if (filter === "Active") {
-    tasksForTodolist = tasksForTodolist.filter((f) => !f.status)
+    tasksForTodolist = tasksForTodolist.filter((f) => f.status===TaskStatus.New)
   }
 
   if (filter === "Completed") {
-    tasksForTodolist = tasksForTodolist.filter((f) => f.isDone)
+    tasksForTodolist = tasksForTodolist.filter((f) => f.status===TaskStatus.Completed)
   }
 
   return (
@@ -36,7 +37,7 @@ export const Tasks = ({ todolist }: Props) => {
       ) : (
         <List>
           {tasksForTodolist?.map((task) => {
-            return <Task task={task} todolistId={id} />
+            return <Task key={task.id} task={task} todolistId={id} />
           })}
         </List>
       )}

@@ -1,3 +1,4 @@
+/*
 import Checkbox from "@mui/material/Checkbox"
 import React, { ChangeEvent, useEffect, useState } from "react"
 import { EditableSpan } from "common/components/EditableSpan/EditableSpan"
@@ -92,7 +93,7 @@ export const AppHttpRequests = () => {
     <div style={{ margin: "20px" }}>
       <AddItemForm addItem={createTodolistHandler} />
 
-      {/* Todolists */}
+      {/!* Todolists *!/}
       {todolists.map((tl: Todolist) => {
         return (
           <div key={tl.id} style={todolist}>
@@ -102,7 +103,7 @@ export const AppHttpRequests = () => {
             </div>
             <AddItemForm addItem={(title) => createTaskHandler(title, tl.id)} />
 
-            {/* Tasks */}
+            {/!* Tasks *!/}
             {!!tasks[tl.id] &&
               tasks[tl.id].map((task: DomainTask) => {
                 return (
@@ -133,3 +134,4 @@ const todolist: React.CSSProperties = {
   justifyContent: "space-between",
   flexDirection: "column",
 }
+*/

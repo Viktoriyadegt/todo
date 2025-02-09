@@ -2,7 +2,7 @@ import React from "react"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
 import { usAppDispatch } from "common/hooks/hooks"
-import { addTaskAC } from "../../model/tasks-reducer"
+import {addTaskAC, addTaskTC} from "../../model/tasks-reducer"
 import { TodolistType } from "../../model/todolists-reducer"
 import { AddItemForm } from "common/components"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
@@ -15,7 +15,7 @@ export const Todolist = ({ todolist }: TodolistPropsType) => {
   const dispatch = usAppDispatch()
 
   const addTaskHandler = (title: string) => {
-    dispatch(addTaskAC({ todolistId: todolist.id, title }))
+    dispatch(addTaskTC({ todolistId: todolist.id, title }))
   }
 
   return (
