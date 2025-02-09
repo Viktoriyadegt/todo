@@ -3,8 +3,7 @@ import React, {useEffect} from "react"
 import {Todolist} from "./Todolist/Todolist"
 import {selectTodolists} from "../model/todolist-selector"
 import {usAppDispatch, usAppSelector} from "common/hooks"
-import {todolistsApi} from "../api/todolistsApi";
-import {fetchTodolistsTC, setTodolistsAC} from "../model/todolists-reducer";
+import {fetchTodolistsTC} from "../model/todolists-reducer";
 
 export const Todolists = () => {
     const todolists = usAppSelector(selectTodolists)

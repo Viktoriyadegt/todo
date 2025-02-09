@@ -1,8 +1,7 @@
 import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer"
-import type {AppDispatch, RootState} from "../../../app/store";
+import type {AppDispatch} from "../../../app/store";
 import {tasksApi} from "../api/tasksApi";
-import type {DomainTask, UpdateTaskDomainModel, UpdateTaskModel} from "../api/tasksApi.types";
-import {TaskStatus} from "common/enums";
+import type {DomainTask, UpdateTaskModel} from "../api/tasksApi.types";
 
 
 const initialState: TasksStateType = {}
