@@ -2,7 +2,7 @@ import { AddTodolistActionType, RemoveTodolistActionType } from "./todolists-red
 import type { AppDispatch, AppThunk } from "../../../app/store"
 import { tasksApi } from "../api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "../api/tasksApi.types"
-import { type RequestStatus, setAppErrorAC, setAppStatusAC } from "./app-reducer"
+import { setAppStatusAC } from "./app-reducer"
 import { ResultCode, TaskStatus } from "common/enums/enums"
 import { handleAppError } from "common/utils/handleAppError"
 import { handleNetworkError } from "common/utils/handleNetworkError"

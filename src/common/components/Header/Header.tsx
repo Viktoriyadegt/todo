@@ -1,7 +1,7 @@
 import React from "react"
 import { AppBar, IconButton, LinearProgress, Switch, Toolbar } from "@mui/material"
 import { Menu } from "@mui/icons-material"
-import { selectError, selectStatus, selectThemeMode } from "../../../features/todolists/model/app-selector"
+import { selectStatus, selectThemeMode } from "../../../features/todolists/model/app-selector"
 import { changeThemeModeAC } from "../../../features/todolists/model/app-reducer"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"

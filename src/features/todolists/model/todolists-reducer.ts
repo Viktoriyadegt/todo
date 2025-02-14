@@ -1,7 +1,7 @@
 import type { Todolist } from "../api/todolistsApi.types"
 import { todolistsApi } from "../api/todolistsApi"
 import type { AppDispatch, AppThunk } from "../../../app/store"
-import { type RequestStatus, setAppErrorAC, setAppStatusAC } from "./app-reducer"
+import { type RequestStatus, setAppStatusAC } from "./app-reducer"
 import { ResultCode } from "common/enums/enums"
 import { handleAppError } from "common/utils/handleAppError"
 import { handleNetworkError } from "common/utils/handleNetworkError"
