@@ -5,7 +5,7 @@ export type FieldError = {
 
 export type ResponseType<T = {}> = {
   data: T
-  messages: []
+  messages: string[]
   fieldsErrors: FieldError
   resultCode: 0
 }

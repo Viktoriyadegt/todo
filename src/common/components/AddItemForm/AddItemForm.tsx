@@ -4,9 +4,10 @@ import { AddBox } from "@mui/icons-material"
 
 type AddItemFormType = {
   addItem: (title: string) => void
+  disabled?: boolean
 }
 
-export const AddItemForm = ({ addItem }: AddItemFormType) => {
+export const AddItemForm = ({ addItem, disabled }: AddItemFormType) => {
   let [taskTitle, setTaskTitle] = useState<string>("")
   let [error, setError] = useState<string | null>(null)
 
@@ -38,8 +39,9 @@ export const AddItemForm = ({ addItem }: AddItemFormType) => {
         helperText={error}
         onChange={changeTaskTitleTaskHandler}
         onKeyUp={onKeyUpHandler}
+        disabled={disabled}
       />
-      <IconButton onClick={addTaskHandler} color={"primary"}>
+      <IconButton onClick={addTaskHandler} color={"primary"} disabled={disabled}>
         <AddBox />
       </IconButton>
     </div>

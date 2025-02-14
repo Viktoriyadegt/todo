@@ -1,15 +1,16 @@
 import React from "react"
-import { AppBar, IconButton, Switch, Toolbar } from "@mui/material"
+import { AppBar, IconButton, LinearProgress, Switch, Toolbar } from "@mui/material"
 import { Menu } from "@mui/icons-material"
-import { selectThemeMode } from "../../../features/todolists/model/app-selector"
+import { selectError, selectStatus, selectThemeMode } from "../../../features/todolists/model/app-selector"
 import { changeThemeModeAC } from "../../../features/todolists/model/app-reducer"
-import { usAppDispatch, usAppSelector } from "common/hooks"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { MenuButton } from "common/components"
 
 export const Header = () => {
-  const dispatch = usAppDispatch()
-  const themeMode = usAppSelector(selectThemeMode)
+  const dispatch = useAppDispatch()
+  const themeMode = useAppSelector(selectThemeMode)
+  const status = useAppSelector(selectStatus)
 
   const theme = getTheme(themeMode)
 
@@ -30,6 +31,7 @@ export const Header = () => {
           <Switch color={"default"} onChange={changeModeHandler} />
         </div>
       </Toolbar>
+      {status === "loading" && <LinearProgress />}
     </AppBar>
   )
 }
