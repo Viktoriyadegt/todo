@@ -1,14 +1,14 @@
 import { List } from "@mui/material"
 import React, { useEffect } from "react"
 import { selectTasks } from "../../../model/task-selector"
-import { TodolistType } from "../../../model/todolists-reducer"
+import { type DomainTodolist } from "../../../model/todolists-reducer"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { Task } from "./Task/Task"
 import { fetchTasksTC } from "../../../model/tasks-reducer"
 import { TaskStatus } from "common/enums"
 
 export type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: Props) => {
@@ -37,7 +37,7 @@ export const Tasks = ({ todolist }: Props) => {
       ) : (
         <List>
           {tasksForTodolist?.map((task) => {
-            return <Task key={task.id} task={task} todolistId={id} />
+            return <Task key={task.id} task={task} todolistId={id} entityStatus={todolist.entityStatus} />
           })}
         </List>
       )}

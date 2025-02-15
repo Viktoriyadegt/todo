@@ -25,7 +25,7 @@ export const TodolistTitle = ({ todolist, disabled }: Props) => {
 
   return (
     <h3>
-      <EditableSpan title={title} changeTitle={changeTaskTitleHandler} />
+      <EditableSpan title={title} changeTitle={changeTaskTitleHandler} disabled={disabled} />
       <IconButton onClick={removeTodolistHandler} disabled={disabled}>
         <Delete />
       </IconButton>

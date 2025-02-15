@@ -7,13 +7,15 @@ import { EditableSpan } from "common/components"
 import { getListItemSx } from "./Task.styles"
 import type { DomainTask } from "../../../../api/tasksApi.types"
 import { TaskStatus } from "common/enums"
+import type { RequestStatus } from "../../../../model/app-reducer"
 
 export type Props = {
   task: DomainTask
   todolistId: string
+  entityStatus: RequestStatus
 }
 
-export const Task = ({ task, todolistId }: Props) => {
+export const Task = ({ task, todolistId, entityStatus }: Props) => {
   const dispatch = useAppDispatch()
 
   const removeTaskHandler = () => {
@@ -38,13 +40,19 @@ export const Task = ({ task, todolistId }: Props) => {
     dispatch(updateTaskTC(model))
   }
 
+  const disabled = task.status === TaskStatus.InProgress || entityStatus === "loading"
+
   return (
     <ListItem key={task.id} sx={getListItemSx(task.status === TaskStatus.Completed)}>
       <div>
-        <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-        <EditableSpan title={task.title} changeTitle={changeTaskTitleHandler} />
+        <Checkbox
+          checked={task.status === TaskStatus.Completed}
+          onChange={changeTaskStatusHandler}
+          disabled={disabled}
+        />
+        <EditableSpan title={task.title} changeTitle={changeTaskTitleHandler} disabled={disabled} />
       </div>
-      <IconButton onClick={removeTaskHandler} disabled={task.status === TaskStatus.InProgress}>
+      <IconButton onClick={removeTaskHandler} disabled={disabled}>
         <Delete />
       </IconButton>
     </ListItem>
