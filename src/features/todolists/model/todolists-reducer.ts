@@ -1,10 +1,10 @@
 import type { Todolist } from "../api/todolistsApi.types"
 import { todolistsApi } from "../api/todolistsApi"
 import type { AppDispatch, AppThunk } from "../../../app/store"
-import { type RequestStatus, setAppStatusAC } from "./app-reducer"
 import { ResultCode } from "common/enums/enums"
 import { handleAppError } from "common/utils/handleAppError"
 import { handleNetworkError } from "common/utils/handleNetworkError"
+import { type RequestStatus, setAppStatusAC } from "../../../app/app-reducer"
 
 export type DomainTodolist = Todolist & {
   filter: FilterType
@@ -35,6 +35,9 @@ export const todolistsReducer = (state: DomainTodolist[] = initialState, action:
         tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.entityStatus } : tl,
       )
     }
+    case "RESET-TODOLISTS": {
+      return []
+    }
     default:
       return state
   }
@@ -58,6 +61,10 @@ export const changeTodolistFilterAC = (id: string, filter: FilterType) => {
 
 export const setTodolistsAC = (todolists: Todolist[]) => {
   return { type: "SET-TODOLISTS", todolists } as const
+}
+
+export const resetTodolistsAC = () => {
+  return { type: "RESET-TODOLISTS" } as const
 }
 
 export const changeTodolistEntityStatusAC = (payload: { id: string; entityStatus: RequestStatus }) => {
@@ -142,6 +149,8 @@ export type SetTodolistsACActionType = ReturnType<typeof setTodolistsAC>
 
 export type ChangeTodolistEntityStatusActionType = ReturnType<typeof changeTodolistEntityStatusAC>
 
+export type ResetTodolistEntityStatusActionType = ReturnType<typeof resetTodolistsAC>
+
 type ActionsType =
   | RemoveTodolistActionType
   | AddTodolistActionType
@@ -149,6 +158,7 @@ type ActionsType =
   | ChangeTodolistFilterActionType
   | SetTodolistsACActionType
   | ChangeTodolistEntityStatusActionType
+  | ResetTodolistEntityStatusActionType
 
 export type FilterType = "All" | "Active" | "Completed"
 

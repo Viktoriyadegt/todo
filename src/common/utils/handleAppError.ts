@@ -1,4 +1,4 @@
-import { setAppErrorAC, setAppStatusAC } from "../../features/todolists/model/app-reducer"
+import { setAppErrorAC, setAppStatusAC } from "app/app-reducer"
 import type { AppDispatch } from "../../app/store"
 import type { ResponseType } from "common/types"
 

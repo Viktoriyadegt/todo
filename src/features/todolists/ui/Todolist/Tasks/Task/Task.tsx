@@ -7,7 +7,7 @@ import { EditableSpan } from "common/components"
 import { getListItemSx } from "./Task.styles"
 import type { DomainTask } from "../../../../api/tasksApi.types"
 import { TaskStatus } from "common/enums"
-import type { RequestStatus } from "../../../../model/app-reducer"
+import type { RequestStatus } from "../../../../../../app/app-reducer"
 
 export type Props = {
   task: DomainTask

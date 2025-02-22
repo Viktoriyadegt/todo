@@ -1,28 +1,39 @@
-import React from "react"
-import "../features/todolists/ui/Todolist/TodolistTitle/TodolistTitle.module.css"
-import { CssBaseline, ThemeProvider } from "@mui/material"
-import { useAppSelector } from "common/hooks/hooks"
+import CssBaseline from "@mui/material/CssBaseline"
+import { ThemeProvider } from "@mui/material/styles"
+import { Header, ErrorSnackbar } from "common/components"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
-import { Main } from "./Main"
-import { Header } from "common/components/Header/Header"
-import { selectThemeMode } from "../features/todolists/model/app-selector"
-import { ErrorSnackbar } from "common/components"
+import { Routing } from "common/routing"
+import { selectThemeMode } from "./app-selector"
+import { useEffect } from "react"
+import { initializeAppTC } from "../features/auth/model/auth-reducer"
+import { selectIsInitialized } from "../features/auth/model/auth-selector"
+import { CircularProgress } from "@mui/material"
+import s from "./App.module.css"
 
-function App() {
+export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
+  const isInitialized = useAppSelector(selectIsInitialized)
+  const dispatch = useAppDispatch()
 
-  const theme = getTheme(themeMode)
+  useEffect(() => {
+    dispatch(initializeAppTC())
+  }, [])
+
+  if (!isInitialized) {
+    return (
+      <div className={s.circularProgressContainer}>
+        <CircularProgress size={150} thickness={3} />
+      </div>
+    )
+  }
 
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header />
-        <Main />
-        <ErrorSnackbar />
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={getTheme(themeMode)}>
+      <CssBaseline />
+      <Header />
+      <Routing />
+      <ErrorSnackbar />
+    </ThemeProvider>
   )
 }
-
-export default App

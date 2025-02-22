@@ -1,11 +1,15 @@
-import { AddTodolistActionType, RemoveTodolistActionType } from "./todolists-reducer"
+import {
+  AddTodolistActionType,
+  RemoveTodolistActionType,
+  type ResetTodolistEntityStatusActionType,
+} from "./todolists-reducer"
 import type { AppDispatch, AppThunk } from "../../../app/store"
 import { tasksApi } from "../api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "../api/tasksApi.types"
-import { setAppStatusAC } from "./app-reducer"
 import { ResultCode, TaskStatus } from "common/enums/enums"
 import { handleAppError } from "common/utils/handleAppError"
 import { handleNetworkError } from "common/utils/handleNetworkError"
+import { setAppStatusAC } from "../../../app/app-reducer"
 
 const initialState: TasksStateType = {}
 
@@ -53,6 +57,10 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         ...state,
         [todolistId]: state[todolistId].map((t) => (t.id === id ? { ...t, status } : t)),
       }
+    }
+
+    case "RESET-TODOLISTS": {
+      return {}
     }
 
     default:
@@ -172,6 +180,7 @@ type ActionsType =
   | SetTasksACType
   | UpdateTaskACType
   | ChangeTaskEntityStatusACType
+  | ResetTodolistEntityStatusActionType
 
 export type TasksStateType = {
   [key: string]: DomainTask[]

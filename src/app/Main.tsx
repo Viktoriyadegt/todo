@@ -1,12 +1,22 @@
-import React from "react"
-import { Container, Grid2 } from "@mui/material"
-import { AddItemForm } from "common/components/AddItemForm/AddItemForm"
-import { useAppDispatch } from "common/hooks/hooks"
-import { Todolists } from "../features/todolists/ui/Todolists"
+import Container from "@mui/material/Container"
+import React, { useEffect } from "react"
+import { AddItemForm } from "common/components"
+import { useAppDispatch, useAppSelector } from "common/hooks"
 import { addTodolistTC } from "../features/todolists/model/todolists-reducer"
+import { Todolists } from "../features/todolists/ui/Todolists"
+import { Grid2 } from "@mui/material"
+import { selectIsLoggedIn } from "../features/auth/model/auth-selector"
+import { Path } from "common/routing/Routing"
+import { useNavigate } from "react-router"
 
 export const Main = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
+  useEffect(() => {
+    !isLoggedIn && navigate(Path.Login)
+  }, [isLoggedIn])
 
   const addTodolistTitle = (title: string) => {
     dispatch(addTodolistTC(title))
