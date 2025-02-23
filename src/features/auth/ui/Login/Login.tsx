@@ -78,6 +78,7 @@ export const Login = () => {
                 margin="normal"
                 {...register("email", {
                   required: "Email is required",
+
                   pattern: {
                     value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                     message: "Incorrect email address",
@@ -86,7 +87,19 @@ export const Login = () => {
               />
               {/*{errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}*/}
               <span className={s.errorMessage}>{errors.email?.message}</span>
-              <TextField type="password" label="Password" margin="normal" {...register("password")} />
+              <TextField
+                type="password"
+                label="Password"
+                margin="normal"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 3,
+                    message: "Password must be at least 3 characters long",
+                  },
+                })}
+              />
+              <span className={s.errorMessage}>{errors.password?.message}</span>
               <FormControlLabel
                 label={"Remember me"}
                 control={

@@ -15,12 +15,15 @@ import { selectStatus } from "app/app-selector"
 import { selectThemeMode } from "../../../app/app-selector"
 import { selectIsLoggedIn } from "../../../features/auth/model/auth-selector"
 import { logoutTC } from "../../../features/auth/model/auth-reducer"
+import { useNavigate } from "react-router"
+import { Path } from "common/routing/Routing"
 
 export const Header = () => {
   const dispatch = useAppDispatch()
   const themeMode = useAppSelector(selectThemeMode)
   const status = useAppSelector(selectStatus)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const navigate = useNavigate()
 
   const theme = getTheme(themeMode)
 
@@ -32,6 +35,10 @@ export const Header = () => {
     dispatch(logoutTC())
   }
 
+  const faqHandler = () => {
+    navigate(Path.FAQ)
+  }
+
   return (
     <AppBar position={"static"} sx={{ mb: "30px" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -40,7 +47,9 @@ export const Header = () => {
         </IconButton>
         <div>
           {isLoggedIn && <MenuButton onClick={logoutHandler}>Logout</MenuButton>}
-          <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
+          <MenuButton onClick={faqHandler} background={theme.palette.primary.dark}>
+            Faq
+          </MenuButton>
           <Switch color={"default"} onChange={changeModeHandler} />
         </div>
       </Toolbar>

@@ -1,12 +1,20 @@
 .title {
-    text-align: center;
-    font-size: 250px;
+    font-size: 200px;
     margin: 0;
 }
 
 .subTitle {
-    text-align: center;
     font-size: 50px;
     margin: 0;
     text-transform: uppercase;
+    padding-bottom: 40px;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+

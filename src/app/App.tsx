@@ -7,13 +7,14 @@ import { Routing } from "common/routing"
 import { selectThemeMode } from "./app-selector"
 import { useEffect } from "react"
 import { initializeAppTC } from "../features/auth/model/auth-reducer"
-import { selectIsInitialized } from "../features/auth/model/auth-selector"
+import { selectIsInitialized, selectIsLoggedIn } from "../features/auth/model/auth-selector"
 import { CircularProgress } from "@mui/material"
 import s from "./App.module.css"
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const isInitialized = useAppSelector(selectIsInitialized)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export const App = () => {
     <ThemeProvider theme={getTheme(themeMode)}>
       <CssBaseline />
       <Header />
-      <Routing />
+      <Routing isLoggedIn={isLoggedIn} />
       <ErrorSnackbar />
     </ThemeProvider>
   )
