@@ -5,16 +5,11 @@ import LinearProgress from "@mui/material/LinearProgress"
 import Switch from "@mui/material/Switch"
 import Toolbar from "@mui/material/Toolbar"
 import React from "react"
-
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { MenuButton } from "common/components"
-
-import { changeThemeModeAC } from "app/app-reducer"
-import { selectStatus } from "app/app-selector"
-import { selectThemeMode } from "../../../app/app-selector"
-import { selectIsLoggedIn } from "../../../features/auth/model/auth-selector"
-import { logoutTC } from "../../../features/auth/model/auth-reducer"
+import { changeThemeMode, selectStatus, selectThemeMode } from "../../../app/appSlice"
+import { logoutTC, selectIsLoggedIn } from "../../../features/auth/model/authSlice"
 import { useNavigate } from "react-router"
 import { Path } from "common/routing/Routing"
 
@@ -28,7 +23,7 @@ export const Header = () => {
   const theme = getTheme(themeMode)
 
   const changeModeHandler = () => {
-    dispatch(changeThemeModeAC(themeMode == "light" ? "dark" : "light"))
+    dispatch(changeThemeMode({ themeMode: themeMode == "light" ? "dark" : "light" }))
   }
 
   const logoutHandler = () => {

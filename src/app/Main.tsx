@@ -2,12 +2,12 @@ import Container from "@mui/material/Container"
 import React, { useEffect } from "react"
 import { AddItemForm } from "common/components"
 import { useAppDispatch, useAppSelector } from "common/hooks"
-import { addTodolistTC } from "../features/todolists/model/todolists-reducer"
+import { addTodolistTC } from "../features/todolists/model/todolistsSlice"
 import { Todolists } from "../features/todolists/ui/Todolists"
 import { Grid2 } from "@mui/material"
-import { selectIsLoggedIn } from "../features/auth/model/auth-selector"
 import { Path } from "common/routing/Routing"
 import { useNavigate } from "react-router"
+import { selectIsLoggedIn } from "../features/auth/model/authSlice"
 
 export const Main = () => {
   const dispatch = useAppDispatch()

@@ -1,13 +1,13 @@
 import { Checkbox, IconButton, ListItem } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 import React, { ChangeEvent } from "react"
-import { removeTaskTC, updateTaskTC } from "../../../../model/tasks-reducer"
+import { removeTaskTC, updateTaskTC } from "../../../../model/tasksSlice"
 import { useAppDispatch } from "common/hooks"
 import { EditableSpan } from "common/components"
 import { getListItemSx } from "./Task.styles"
 import type { DomainTask } from "../../../../api/tasksApi.types"
 import { TaskStatus } from "common/enums"
-import type { RequestStatus } from "../../../../../../app/app-reducer"
+import type { RequestStatus } from "../../../../../../app/appSlice"
 
 export type Props = {
   task: DomainTask

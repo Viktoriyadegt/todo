@@ -10,12 +10,11 @@ import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { Controller, type SubmitHandler, useForm } from "react-hook-form"
 import s from "./Login.module.css"
-import { loginTC } from "../../model/auth-reducer"
-import { selectThemeMode } from "../../../../app/app-selector"
-import { selectIsLoggedIn } from "../../model/auth-selector"
+import { loginTC, selectIsLoggedIn } from "../../model/authSlice"
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
 import { Path } from "common/routing/Routing"
+import { selectThemeMode } from "../../../../app/appSlice"
 
 type Inputs = {
   email: string
@@ -85,7 +84,6 @@ export const Login = () => {
                   },
                 })}
               />
-              {/*{errors.email && <span className={s.errorMessage}>{errors.email.message}</span>}*/}
               <span className={s.errorMessage}>{errors.email?.message}</span>
               <TextField
                 type="password"

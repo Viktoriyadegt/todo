@@ -1,15 +1,14 @@
 import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider } from "@mui/material/styles"
-import { Header, ErrorSnackbar } from "common/components"
+import { ErrorSnackbar, Header } from "common/components"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { Routing } from "common/routing"
-import { selectThemeMode } from "./app-selector"
 import { useEffect } from "react"
-import { initializeAppTC } from "../features/auth/model/auth-reducer"
-import { selectIsInitialized, selectIsLoggedIn } from "../features/auth/model/auth-selector"
+import { initializeAppTC, selectIsInitialized, selectIsLoggedIn } from "../features/auth/model/authSlice"
 import { CircularProgress } from "@mui/material"
 import s from "./App.module.css"
+import { selectThemeMode } from "./appSlice"
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
