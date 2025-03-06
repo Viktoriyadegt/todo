@@ -1,4 +1,4 @@
-import type { AppDispatch } from "../../../app/store"
+import type { AppDispatch, RootState } from "../../../app/store"
 import { tasksApi } from "../api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "../api/tasksApi.types"
 import { ResultCode, TaskStatus } from "common/enums/enums"
@@ -7,6 +7,7 @@ import { handleNetworkError } from "common/utils/handleNetworkError"
 import { setAppStatus } from "app/appSlice"
 import { createSlice } from "@reduxjs/toolkit"
 import { addTodolist, removeTodolist } from "./todolistsSlice"
+import { clearTasksAndTodolists } from "common/actions/common.actions"
 
 export const tasksSlice = createSlice({
   name: "tasks",
@@ -20,8 +21,9 @@ export const tasksSlice = createSlice({
       state[action.payload.task.todoListId].unshift(action.payload.task)
     }),
     updateTask: create.reducer<{ task: DomainTask }>((state, action) => {
-      let index = state[action.payload.task.todoListId].findIndex((t) => t.id === action.payload.task.id)
-      state[action.payload.task.todoListId][index] = action.payload.task
+      const tasks = state[action.payload.task.todoListId]
+      const index = tasks.findIndex((t) => t.id === action.payload.task.id)
+      tasks[index] = { ...tasks[index], ...action.payload.task }
     }),
     setTasks: create.reducer<{ todolistId: string; tasks: DomainTask[] }>((state, action) => {
       state[action.payload.todolistId] = action.payload.tasks
@@ -29,9 +31,6 @@ export const tasksSlice = createSlice({
     changeTaskEntityStatus: create.reducer<{ todolistId: string; id: string; status: TaskStatus }>((state, action) => {
       let task = state[action.payload.todolistId].find((t) => t.id === action.payload.id)
       task && (task.status = action.payload.status)
-    }),
-    clearTasks: create.reducer(() => {
-      return {}
     }),
   }),
 
@@ -43,6 +42,9 @@ export const tasksSlice = createSlice({
       .addCase(removeTodolist, (state, action) => {
         delete state[action.payload.todolistId]
       })
+      .addCase(clearTasksAndTodolists, () => {
+        return {}
+      })
   },
   selectors: {
     selectTasks: (state) => state,
@@ -52,7 +54,7 @@ export const tasksSlice = createSlice({
 export const tasksReducer = tasksSlice.reducer
 export const { selectTasks } = tasksSlice.selectors
 
-export const { removeTask, addTask, setTasks, clearTasks, updateTask, changeTaskEntityStatus } = tasksSlice.actions
+export const { removeTask, addTask, setTasks, updateTask, changeTaskEntityStatus } = tasksSlice.actions
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
@@ -103,30 +105,39 @@ export const addTaskTC = (args: { todolistId: string; title: string }) => (dispa
     })
 }
 
-export const updateTaskTC = (model: DomainTask) => (dispatch: AppDispatch) => {
-  const domainModel: UpdateTaskModel = {
-    title: model.title,
-    description: model.description,
-    priority: model.priority,
-    status: model.status,
-    startDate: model.startDate,
-    deadline: model.deadline,
-  }
-  dispatch(setAppStatus({ status: "loading" }))
-  tasksApi
-    .updateTask({ todolistId: model.todoListId, taskId: model.id, model: domainModel })
-    .then((res) => {
-      if (res.data.resultCode === ResultCode.Success) {
-        dispatch(setAppStatus({ status: "succeeded" }))
-        dispatch(updateTask({ task: res.data.data.item }))
-      } else {
-        handleAppError(dispatch, res.data)
+export const updateTaskTC =
+  (args: { domainModel: Partial<DomainTask>; todolistId: string; taskId: string }) =>
+  (dispatch: AppDispatch, getState: () => RootState) => {
+    const allTasksFromState = getState().tasks
+    const tasksForCurrentTodolist = allTasksFromState[args.todolistId]
+    const task = tasksForCurrentTodolist.find((t) => t.id === args.taskId)
+
+    if (task) {
+      const model: UpdateTaskModel = {
+        status: task.status,
+        title: task.title,
+        deadline: task.deadline,
+        description: task.description,
+        priority: task.priority,
+        startDate: task.startDate,
+        ...args.domainModel,
       }
-    })
-    .catch((error) => {
-      handleNetworkError(dispatch, error)
-    })
-}
+      dispatch(setAppStatus({ status: "loading" }))
+      tasksApi
+        .updateTask({ todolistId: args.todolistId, taskId: args.taskId, model })
+        .then((res) => {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatus({ status: "succeeded" }))
+            dispatch(updateTask({ task: res.data.data.item }))
+          } else {
+            handleAppError(dispatch, res.data)
+          }
+        })
+        .catch((error) => {
+          handleNetworkError(dispatch, error)
+        })
+    }
+  }
 
 export type TasksStateType = {
   [key: string]: DomainTask[]

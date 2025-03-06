@@ -6,6 +6,7 @@ import { handleAppError } from "common/utils/handleAppError"
 import { handleNetworkError } from "common/utils/handleNetworkError"
 import { type RequestStatus, setAppStatus } from "../../../app/appSlice"
 import { createSlice } from "@reduxjs/toolkit"
+import { clearTasksAndTodolists } from "common/actions/common.actions"
 
 export const todolistsSlice = createSlice({
   name: "todolists",
@@ -33,12 +34,14 @@ export const todolistsSlice = createSlice({
       const index = state.findIndex((tl) => tl.id === action.payload.id)
       index > 0 && (state[index].entityStatus = action.payload.entityStatus)
     }),
-    resetTodolists: create.reducer((state, action) => {
-      return []
-    }),
   }),
   selectors: {
     selectTodolists: (state) => state,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(clearTasksAndTodolists, () => {
+      return []
+    })
   },
 })
 
@@ -52,7 +55,6 @@ export const {
   changeTodolistEntityStatus,
   changeTodolistFilter,
   changeTodolistTitle,
-  resetTodolists,
 } = todolistsSlice.actions
 
 export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {

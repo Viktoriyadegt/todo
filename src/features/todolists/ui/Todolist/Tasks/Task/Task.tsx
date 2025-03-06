@@ -23,21 +23,23 @@ export const Task = ({ task, todolistId, entityStatus }: Props) => {
   }
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const model: DomainTask = {
-      ...task,
-      status: e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New,
-    }
-
-    dispatch(updateTaskTC(model))
+    dispatch(
+      updateTaskTC({
+        domainModel: { status: e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New },
+        todolistId,
+        taskId: task.id,
+      }),
+    )
   }
 
   const changeTaskTitleHandler = (title: string) => {
-    const model: DomainTask = {
-      ...task,
-      title,
-    }
-
-    dispatch(updateTaskTC(model))
+    dispatch(
+      updateTaskTC({
+        domainModel: { title },
+        todolistId,
+        taskId: task.id,
+      }),
+    )
   }
 
   const disabled = task.status === TaskStatus.InProgress || entityStatus === "loading"
