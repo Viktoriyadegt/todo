@@ -3,7 +3,6 @@ import { instance } from "common/instance/instance"
 import type { ResponseType } from "common/types/types"
 import { DomainTodolist } from "../model/todolistsSlice"
 import { baseApi } from "../../../app/baseApi"
-import { tasksApi } from "./tasksApi"
 
 export const todolistsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

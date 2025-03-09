@@ -16,7 +16,7 @@ export const App = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
   const [isInitialized, setIsInitialized] = useState(false)
-  const { data, isLoading } = useMeQuery()
+  const { data } = useMeQuery()
 
   useEffect(() => {
     if (data) {
