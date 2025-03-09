@@ -4,21 +4,28 @@ import { ErrorSnackbar, Header } from "common/components"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { Routing } from "common/routing"
-import { useEffect } from "react"
-import { initializeAppTC, selectIsInitialized, selectIsLoggedIn } from "../features/auth/model/authSlice"
+import { useEffect, useState } from "react"
 import { CircularProgress } from "@mui/material"
 import s from "./App.module.css"
-import { selectThemeMode } from "./appSlice"
+import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "./appSlice"
+import { useMeQuery } from "../features/auth/api/AuthApi"
+import { ResultCode } from "common/enums/enums"
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
-  const isInitialized = useAppSelector(selectIsInitialized)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const dispatch = useAppDispatch()
+  const [isInitialized, setIsInitialized] = useState(false)
+  const { data, isLoading } = useMeQuery()
 
   useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
+    if (data) {
+      setIsInitialized(true)
+      if (data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: true }))
+      }
+    }
+  }, [data])
 
   if (!isInitialized) {
     return (

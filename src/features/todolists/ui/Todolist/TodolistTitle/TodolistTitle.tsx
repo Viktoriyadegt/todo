@@ -1,9 +1,9 @@
 import { IconButton } from "@mui/material"
 import React from "react"
 import { Delete } from "@mui/icons-material"
-import { removeTodolistTC, TodolistType, updateTodolistTitleTC } from "../../../model/todolistsSlice"
+import { TodolistType } from "../../../model/todolistsSlice"
 import { EditableSpan } from "common/components"
-import { useAppDispatch } from "common/hooks"
+import { useDeleteTodolistMutation, useUpdateTodolistMutation } from "../../../api/todolistsApi"
 
 export type Props = {
   todolist: TodolistType
@@ -13,14 +13,15 @@ export type Props = {
 export const TodolistTitle = ({ todolist, disabled }: Props) => {
   const { id, title } = todolist
 
-  const dispatch = useAppDispatch()
+  const [deleteTodolist] = useDeleteTodolistMutation()
+  const [updateTodolist] = useUpdateTodolistMutation()
 
   const changeTaskTitleHandler = (title: string) => {
-    dispatch(updateTodolistTitleTC(id, title))
+    updateTodolist({ id, title })
   }
 
   const removeTodolistHandler = () => {
-    dispatch(removeTodolistTC(id))
+    deleteTodolist(id)
   }
 
   return (

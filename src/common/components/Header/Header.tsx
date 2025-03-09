@@ -8,10 +8,12 @@ import React from "react"
 import { useAppDispatch, useAppSelector } from "common/hooks"
 import { getTheme } from "common/theme"
 import { MenuButton } from "common/components"
-import { changeThemeMode, selectStatus, selectThemeMode } from "../../../app/appSlice"
-import { logoutTC, selectIsLoggedIn } from "../../../features/auth/model/authSlice"
+import { changeThemeMode, selectIsLoggedIn, selectStatus, selectThemeMode, setIsLoggedIn } from "../../../app/appSlice"
 import { useNavigate } from "react-router"
 import { Path } from "common/routing/Routing"
+import { useLogoutMutation } from "../../../features/auth/api/AuthApi"
+import { ResultCode } from "common/enums/enums"
+import { clearTasksAndTodolists } from "common/actions/common.actions"
 
 export const Header = () => {
   const dispatch = useAppDispatch()
@@ -19,6 +21,7 @@ export const Header = () => {
   const status = useAppSelector(selectStatus)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const navigate = useNavigate()
+  const [logout] = useLogoutMutation()
 
   const theme = getTheme(themeMode)
 
@@ -27,7 +30,13 @@ export const Header = () => {
   }
 
   const logoutHandler = () => {
-    dispatch(logoutTC())
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        localStorage.removeItem("sn-token")
+        dispatch(clearTasksAndTodolists())
+      }
+    })
   }
 
   const faqHandler = () => {

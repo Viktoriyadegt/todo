@@ -1,11 +1,10 @@
 import React from "react"
 import { Tasks } from "./Tasks/Tasks"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
-import { useAppDispatch } from "common/hooks/hooks"
-import { addTaskTC } from "../../model/tasksSlice"
 import { type DomainTodolist } from "../../model/todolistsSlice"
 import { AddItemForm } from "common/components"
 import { FilterTasksButtons } from "./FilterTasksButtons/FilterTasksButtons"
+import { useCreateTaskMutation } from "../../api/tasksApi"
 
 type TodolistPropsType = {
   todolist: DomainTodolist
@@ -13,10 +12,10 @@ type TodolistPropsType = {
 
 export const Todolist = ({ todolist }: TodolistPropsType) => {
   const { id, entityStatus } = todolist
-  const dispatch = useAppDispatch()
+  const [createTask] = useCreateTaskMutation()
 
   const addTaskHandler = (title: string) => {
-    dispatch(addTaskTC({ todolistId: id, title }))
+    createTask({ todolistId: id, title })
   }
 
   return (

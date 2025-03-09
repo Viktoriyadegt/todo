@@ -1,5 +1,5 @@
 import type { Todolist } from "../api/todolistsApi.types"
-import { todolistsApi } from "../api/todolistsApi"
+import { _todolistsApi } from "../api/todolistsApi"
 import type { AppDispatch } from "../../../app/store"
 import { ResultCode } from "common/enums/enums"
 import { handleAppError } from "common/utils/handleAppError"
@@ -24,8 +24,10 @@ export const todolistsSlice = createSlice({
       todolist && (todolist.title = action.payload.title)
     }),
     changeTodolistFilter: create.reducer<{ id: string; filter: FilterType }>((state, action) => {
-      const todolist = state.find((t) => t.id === action.payload.id)
-      todolist && (todolist.filter = action.payload.filter)
+      const index = state.findIndex((tl) => tl.id === action.payload.id)
+      if (index !== -1) {
+        state[index].filter = action.payload.filter
+      }
     }),
     setTodolists: create.reducer<{ todolists: Todolist[] }>((state, action) => {
       action.payload.todolists.forEach((t) => state.push({ ...t, filter: "All", entityStatus: "idle" }))
@@ -46,7 +48,6 @@ export const todolistsSlice = createSlice({
 })
 
 export const todolistsReducer = todolistsSlice.reducer
-export const { selectTodolists } = todolistsSlice.selectors
 
 export const {
   setTodolists,
@@ -59,7 +60,7 @@ export const {
 
 export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  todolistsApi
+  _todolistsApi
     .getTodolists()
     .then((res) => {
       dispatch(setAppStatus({ status: "succeeded" }))
@@ -72,7 +73,7 @@ export const fetchTodolistsTC = () => (dispatch: AppDispatch) => {
 
 export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  todolistsApi
+  _todolistsApi
     .createTodolist(title)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -90,7 +91,7 @@ export const addTodolistTC = (title: string) => (dispatch: AppDispatch) => {
 export const removeTodolistTC = (todolistId: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
   dispatch(changeTodolistEntityStatus({ id: todolistId, entityStatus: "loading" }))
-  todolistsApi
+  _todolistsApi
     .deleteTodolist(todolistId)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -108,7 +109,7 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: AppDispatch) 
 
 export const updateTodolistTitleTC = (id: string, title: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  todolistsApi
+  _todolistsApi
     .updateTodolist({ id, title })
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {

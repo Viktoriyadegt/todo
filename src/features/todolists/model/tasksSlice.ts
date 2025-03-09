@@ -1,5 +1,4 @@
 import type { AppDispatch, RootState } from "../../../app/store"
-import { tasksApi } from "../api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "../api/tasksApi.types"
 import { ResultCode, TaskStatus } from "common/enums/enums"
 import { handleAppError } from "common/utils/handleAppError"
@@ -8,6 +7,7 @@ import { setAppStatus } from "app/appSlice"
 import { createSlice } from "@reduxjs/toolkit"
 import { addTodolist, removeTodolist } from "./todolistsSlice"
 import { clearTasksAndTodolists } from "common/actions/common.actions"
+import { _tasksApi } from "../api/tasksApi"
 
 export const tasksSlice = createSlice({
   name: "tasks",
@@ -52,13 +52,12 @@ export const tasksSlice = createSlice({
 })
 
 export const tasksReducer = tasksSlice.reducer
-export const { selectTasks } = tasksSlice.selectors
 
 export const { removeTask, addTask, setTasks, updateTask, changeTaskEntityStatus } = tasksSlice.actions
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  tasksApi
+  _tasksApi
     .getTasks(todolistId)
     .then((res) => {
       dispatch(setAppStatus({ status: "succeeded" }))
@@ -72,7 +71,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
 export const removeTaskTC = (args: { taskId: string; todolistId: string }) => (dispatch: AppDispatch) => {
   dispatch(changeTaskEntityStatus({ todolistId: args.todolistId, id: args.taskId, status: TaskStatus.InProgress }))
   dispatch(setAppStatus({ status: "loading" }))
-  tasksApi
+  _tasksApi
     .deleteTask(args)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -90,7 +89,7 @@ export const removeTaskTC = (args: { taskId: string; todolistId: string }) => (d
 
 export const addTaskTC = (args: { todolistId: string; title: string }) => (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: "loading" }))
-  tasksApi
+  _tasksApi
     .createTask(args)
     .then((res) => {
       if (res.data.resultCode === ResultCode.Success) {
@@ -123,7 +122,7 @@ export const updateTaskTC =
         ...args.domainModel,
       }
       dispatch(setAppStatus({ status: "loading" }))
-      tasksApi
+      _tasksApi
         .updateTask({ todolistId: args.todolistId, taskId: args.taskId, model })
         .then((res) => {
           if (res.data.resultCode === ResultCode.Success) {
